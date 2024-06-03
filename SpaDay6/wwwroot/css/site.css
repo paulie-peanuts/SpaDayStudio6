@@ -16,3 +16,15 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.box {
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+}
+
+#flexy {
+  display: flex;
+  flex-direction: row;
+  /* gap: 20px; */
+}

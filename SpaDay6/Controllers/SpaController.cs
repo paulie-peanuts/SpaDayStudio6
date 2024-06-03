@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace SpaDay6.Controllers
         }
 
         [HttpPost]
-        [Route("/spa")]
+        [Route("/SpaDisplay")]
         public IActionResult Menu(string name, string skintype, string manipedi)
         {
             List<string> facials = new List<string>()
@@ -56,6 +57,20 @@ namespace SpaDay6.Controllers
                     appropriateFacials.Add(facials[i]);
                 }
             }
+
+            ViewBag.Name = name;
+            ViewBag.AppropriateFacials = appropriateFacials;
+            ViewBag.SkinType = skintype;
+            ViewBag.ManiPedi = manipedi;
+
+            List<string> polishColors = new();
+            polishColors.Add("#ffbe0b");
+            polishColors.Add("#fb5607");
+            polishColors.Add("#ff006e");
+            polishColors.Add("#8338ec");
+            polishColors.Add("#3a86ff");
+            ViewBag.PolishColors = polishColors;
+
             return View();
         }
     }
