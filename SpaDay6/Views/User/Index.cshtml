@@ -1,0 +1,8 @@
+<h1>Hi @ViewBag.Username</h1>
+
+<p><a asp-controller="Spa" asp-action="Index">Click</a> to choose your spa experience.</p>
+
+<div>
+    <p>Email : @ViewBag.User?.Email<br />
+    Joined: @ViewBag.User?.Date</p>
+</div>
