@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SpaDay6;
 using SpaDay6.Models;
+using SpaDay6.ViewModels;
+using System.ComponentModel.DataAnnotations;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,26 +20,39 @@ namespace SpaDay6.Controllers
             return View();
         }
 
+        [HttpGet("/add")]
         public IActionResult Add()
         {
-            return View();
+            AddUserViewModel addUserViewModel = new();
+            return View(addUserViewModel);
         }
 
         [HttpPost]
         [Route("/user")]
-        public IActionResult SubmitAddUserForm(User newUser, string verify)
+        public IActionResult SubmitAddUserForm(AddUserViewModel addUserViewModel)
         {
-            if (newUser.Password == verify)
+            if (ModelState.IsValid)
             {
-                ViewBag.user = newUser;
-                return View("Index");
+                if (addUserViewModel.Password == addUserViewModel.Verify)
+                {
+                    User newUser = new()
+                    {
+                        Username = addUserViewModel.Username,
+                        Password = addUserViewModel.Password,
+                        Email = addUserViewModel.Email,
+                    };
+                    return View("Index", newUser);
+                }
+                else 
+                {
+                    ViewBag.error = "Passwords don't match.";
+                    return View("Add", addUserViewModel);
+                }
             }
             else
             {
-                ViewBag.error = "Passwords do not match! Try again!";
-                ViewBag.userName = newUser.Username;
-                ViewBag.eMail = newUser.Email;
-                return View("Add");
+    
+                return View("Add", addUserViewModel);
             }
         }
     }
